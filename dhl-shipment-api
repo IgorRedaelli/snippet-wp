@@ -1,0 +1,93 @@
+// Registra il nuovo status per WooCommerce
+function registra_status_ordine_invia_dhl() {
+    register_post_status( 'wc-invia-dhl', array(
+        'label'                     => 'Invia DHL',
+        'public'                    => true,
+        'exclude_from_search'       => false,
+        'show_in_admin_all_list'    => true,
+        'show_in_admin_status_list' => true,
+        'label_count'               => _n_noop( 'Invia DHL (%s)', 'Invia DHL (%s)' )
+    ) );
+}
+function registra_status_ordine_prelevato_dhl() {
+    register_post_status( 'wc-prelevato-dhl', array(
+        'label'                     => 'Prelevato DHL',
+        'public'                    => true,
+        'exclude_from_search'       => false,
+        'show_in_admin_all_list'    => true,
+        'show_in_admin_status_list' => true,
+        'label_count'               => _n_noop( 'Prelevato DHL (%s)', 'Prelevato DHL (%s)' )
+    ) );
+}
+function registra_status_ordine_ritirato_dhl() {
+    register_post_status( 'wc-ritirato-dhl', array(
+        'label'                     => 'Ritirato DHL',
+        'public'                    => true,
+        'exclude_from_search'       => false,
+        'show_in_admin_all_list'    => true,
+        'show_in_admin_status_list' => true,
+        'label_count'               => _n_noop( 'Ritirato DHL (%s)', 'Ritirato DHL (%s)' )
+    ) );
+}
+
+add_action( 'init', 'registra_status_ordine_invia_dhl' );
+add_action( 'init', 'registra_status_ordine_prelevato_dhl' );
+add_action( 'init', 'registra_status_ordine_ritirato_dhl' );
+
+
+
+// Aggiungere lo status alla lista degli status ordine di WooCommerce
+function aggiungi_status_ordine_invia_dhl( $order_statuses ) {
+ 
+    $new_order_statuses = array();
+ 
+    // aggiungi il nuovo ordine degli status dopo averlo processato
+    foreach ( $order_statuses as $key => $status ) {
+ 
+        $new_order_statuses[ $key ] = $status;
+ 
+        if ( 'wc-processing' === $key ) {
+            $new_order_statuses['wc-invia-dhl'] = 'Invia DHL';
+        }
+    }
+ 
+    return $new_order_statuses;
+}
+
+function aggiungi_status_ordine_prelevato_dhl( $order_statuses ) {
+ 
+    $new_order_statuses = array();
+ 
+    // aggiungi il nuovo ordine degli status dopo averlo processato
+    foreach ( $order_statuses as $key => $status ) {
+ 
+        $new_order_statuses[ $key ] = $status;
+ 
+        if ( 'wc-invia-dhl' === $key ) {
+            $new_order_statuses['wc-prelevato-dhl'] = 'Prelevato DHL';
+        }
+    }
+ 
+    return $new_order_statuses;
+}
+
+function aggiungi_status_ordine_ritirato_dhl( $order_statuses ) {
+ 
+    $new_order_statuses = array();
+ 
+    // aggiungi il nuovo ordine degli status dopo averlo processato
+    foreach ( $order_statuses as $key => $status ) {
+ 
+        $new_order_statuses[ $key ] = $status;
+ 
+        if ( 'wc-prelevato-dhl' === $key ) {
+            $new_order_statuses['wc-ritirato-dhl'] = 'Ritirato DHL';
+        }
+    }
+ 
+    return $new_order_statuses;
+}
+
+add_filter( 'wc_order_statuses', 'aggiungi_status_ordine_invia_dhl' );
+add_filter( 'wc_order_statuses', 'aggiungi_status_ordine_prelevato_dhl' );
+add_filter( 'wc_order_statuses', 'aggiungi_status_ordine_ritirato_dhl' );

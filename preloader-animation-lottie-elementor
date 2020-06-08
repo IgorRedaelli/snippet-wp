@@ -18,6 +18,8 @@
 });
 
 
+<div id="preloader-custom"></div>
+
 <!-- Richiama la libreria Lottie per le animazioni -->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.5.0/lottie.js'></script>
 <!-- Richiama il file del preloader animato -->

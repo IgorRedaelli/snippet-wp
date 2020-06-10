@@ -1,0 +1,18 @@
+<?php 
+
+$url_sito = get_site_url(); // recupera l'URL del sito WordPress
+$lang_utente = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); // Recupera i primi 2 caratteri del parametro language dell'utente
+switch($lang_utente) {
+    case "en":
+    case "fr":
+    case "de":
+    case "es":
+    case "ru":
+        header("Location: $url_sito/$lang_utente/"); // reindirizza l'utente alla lingua tradotta
+        break;
+    default:
+        header("Location: $url_sito/it/"); // reindirizza l'utente alla lingua principale
+        break;
+}
+
+?>

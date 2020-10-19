@@ -1,0 +1,10 @@
+add_filter( 'authenticate','one_session_per_user', 30, 3 );
+
+function one_session_per_user( $user, $username, $password ) {
+$sessions = WP_Session_Tokens::get_instance( $user->ID );
+$all_sessions = $sessions->get_all();
+if ( count($all_sessions) ) {
+$user = new WP_Error('already_signed_in', __('<strong>ERRORE</strong>: Sessione già attiva con questo account utente.'));
+}
+return $user;
+}

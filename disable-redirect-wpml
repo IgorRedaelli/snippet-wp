@@ -1,0 +1,12 @@
+add_action( 'wp_print_scripts', 'wpml_deregister_scripts', 100 );
+function wpml_deregister_scripts() {
+$url_sito = get_site_url(); // recupera l'URL del sito WordPress
+$host_sito = parse_url($url_sito, PHP_URL_HOST); // estrai l'host dall'URL recuperata
+if($host_sito == 'example.com') {
+	// mantiene attivo il reindirizzamento browser
+}
+else {
+    // disattiva il reindirizzamento browser
+	wp_deregister_script( 'wpml-browser-redirect' );
+}
+}

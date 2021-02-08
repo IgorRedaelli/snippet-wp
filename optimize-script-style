@@ -1,0 +1,27 @@
+function ottimizazione_scripts( $tag, $handle, $src ) {
+  $defer = array( 
+  'bootstrap',
+	'jquery',
+	'jquery-core',
+	'jquery-migrate'
+  );
+  if ( in_array( $handle, $defer ) ) {
+     return '<script src="' . $src . '" defer type="text/javascript"></script>' . "\n";
+  }
+    return $tag;
+} 
+add_filter( 'script_loader_tag', 'ottimizzazione_scripts', 10, 3 );
+
+
+function ottimizzazione_styles($html, $handle) {
+  $preload = array( 
+  'bootstrap',
+	'my-style'
+  );
+  if ( in_array( $handle, $preload ) ) {
+        return str_replace("rel='stylesheet'",
+            "rel='preload' as='style' onload=\"this.onload=null;this.rel='stylesheet'\"", $html);
+    }
+    return $html;
+}
+add_filter('style_loader_tag', 'ottimizzazione_styles', 10, 2);

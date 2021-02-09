@@ -1,9 +1,9 @@
-function ottimizazione_scripts( $tag, $handle, $src ) {
+function ottimizzazione_scripts( $tag, $handle, $src ) {
   $defer = array( 
   'bootstrap',
-	'jquery',
-	'jquery-core',
-	'jquery-migrate'
+  'jquery',
+  'jquery-core',
+  'jquery-migrate'
   );
   if ( in_array( $handle, $defer ) ) {
      return '<script src="' . $src . '" defer type="text/javascript"></script>' . "\n";
@@ -16,7 +16,7 @@ add_filter( 'script_loader_tag', 'ottimizzazione_scripts', 10, 3 );
 function ottimizzazione_styles($html, $handle) {
   $preload = array( 
   'bootstrap',
-	'my-style'
+  'my-style'
   );
   if ( in_array( $handle, $preload ) ) {
         return str_replace("rel='stylesheet'",
